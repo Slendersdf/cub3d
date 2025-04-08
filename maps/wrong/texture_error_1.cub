@@ -1,0 +1,13 @@
+ ./textures/no_texture/no_texture.xpm
+SO ./textures/so_texture/so_texture.xpm
+WE ./textures/we_texture/we_texture.xpm
+EA ./textures/ea_texture/ea_texture.xpm
+
+F 210,200,40
+C 200,200,200
+
+111111111111
+100000000001
+10000N000001
+100000000001
+111111111111
