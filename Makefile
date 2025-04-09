@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: caubert <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 07:40:56 by caubert           #+#    #+#              #
-#    Updated: 2025/02/10 07:40:56 by caubert          ###   ########.fr        #
+#    Updated: 2025/04/09 16:06:48 by fpaulas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	cub3D
 CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra
-MFLAGS	=	-lmlx -lXext -lX11 -lm
+MFLAGS	=	-Lminilibx -lmlx -lXext -lX11 -lm
 RM		=	rm -f
 
 SRCDIR	=	srcs
@@ -24,7 +24,8 @@ LIBDIR	=	libft
 SRCS	=	main.c cleanup/frees.c error/error.c setup/init_map.c parser/colors_utils.c parser/dup_line.c parser/map_utils.c \
 			parser/parse_map.c parser/parser.c parser/parser_utils.c parser/textures_utils.c parser/validate_colors.c \
 			parser/validate_file.c parser/validate_textures.c parser/validate_map.c parser/map_parsing_utils.c setup/init_game.c \
-			setup/init_mlx.c setup/init_window.c window/hooks.c cleanup/free_game.c
+			setup/init_mlx.c setup/init_window.c window/hooks.c cleanup/free_game.c \
+			raycasting/load_textures.c raycasting/init_image.c raycasting/raycaster.c
 
 OBJ		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 

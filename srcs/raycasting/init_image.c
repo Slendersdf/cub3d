@@ -6,22 +6,22 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:44:18 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/08 16:44:29 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:56:13 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	init_image(t_game *game)
+int	init_image(t_games *games)
 {
-	game->img.img = mlx_new_image(game->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	if (!game->img.img)
+	games->img.img = mlx_new_image(games->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (!games->img.img)
 		return (1);
-	game->img.addr = mlx_get_data_addr(
-		game->img.img,
-		&game->img.bpp,
-		&game->img.line_length,
-		&game->img.endian
+	games->img.addr = mlx_get_data_addr(
+		games->img.img,
+		&games->img.bpp,
+		&games->img.line_length,
+		&games->img.endian
 	);
 	return (0);
 }

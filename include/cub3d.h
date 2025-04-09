@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 07:50:10 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/08 16:32:42 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:01:55 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
-# include <minilibx/mlx.h>
+# include <../minilibx/mlx.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
 # include "libft.h"
@@ -106,14 +106,14 @@ typedef struct s_img
 }	t_img;
 
 // Structure pour appeler les autres structures
-typedef struct s_game
+typedef struct s_games
 {
 	t_map		*map;
 	t_mlx		*mlx;
 	t_player	player;
 	t_img		img;
 	t_texture	textures[4]; // 0 = NO, 1 = SO, 2 = WE, 3 = EA
-}	t_game;
+}	t_games;
 
 int		main(int argc, char **argv);
 
@@ -183,5 +183,19 @@ int		is_empty_or_spaces(char *line);
 int		verify_map_content(t_map *map);
 int		verify_map_started(t_map *map);
 int		validate_map_format(t_map *map);
+
+
+// FRANCIS - RAYCASTING
+t_texture	load_one_texture(void *mlx, char *path);
+int			load_textures(t_games *games);
+void		init_player(t_games *games);
+
+void	render_frame(t_games *games);
+void	draw_vertical_line(t_games *games, int x, t_ray_params *ray, t_texture *tex);
+int	get_pixel_color(t_texture *tex, int x, int y);
+void	put_pixel(t_img *img, int x, int y, int color);
+
+int	init_image(t_games *games);
+int	game_loop(t_games *games);
 
 #endif
