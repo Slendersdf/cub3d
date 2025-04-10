@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:50:41 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/09 15:59:54 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:57:00 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static t_map	*parse_file(char *filename)
 	free_game(game);
 	return (0);
 } */
+
+// TEST FRANCIS //
 
 int	game_loop(t_games *games)
 {

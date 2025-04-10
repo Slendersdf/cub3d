@@ -6,265 +6,162 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:19:49 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/09 16:53:29 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:56:32 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-/* void	render_frame(t_games *games)
-{
-	for (int x = 0; x < SCREEN_WIDTH; x++)
-	{
-		// Rayon pour cette colonne
-		double camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
-		double ray_dir_x = games->player.dir_x + games->player.plane_x * camera_x;
-		double ray_dir_y = games->player.dir_y + games->player.plane_y * camera_x;
-
-		int map_x = (int)games->player.pos_x;
-		int map_y = (int)games->player.pos_y;
-
-		double delta_dist_x = (ray_dir_x == 0) ? 1e30 : fabs(1 / ray_dir_x);
-		double delta_dist_y = (ray_dir_y == 0) ? 1e30 : fabs(1 / ray_dir_y);
-		double side_dist_x, side_dist_y;
-
-		int step_x, step_y, hit = 0, side;
-
-		// Détermination des pas et distances initiales
-		if (ray_dir_x < 0)
-		{
-			step_x = -1;
-			side_dist_x = (games->player.pos_x - map_x) * delta_dist_x;
-		}
-		else
-		{
-			step_x = 1;
-			side_dist_x = (map_x + 1.0 - games->player.pos_x) * delta_dist_x;
-		}
-		if (ray_dir_y < 0)
-		{
-			step_y = -1;
-			side_dist_y = (games->player.pos_y - map_y) * delta_dist_y;
-		}
-		else
-		{
-			step_y = 1;
-			side_dist_y = (map_y + 1.0 - games->player.pos_y) * delta_dist_y;
-		}
-
-		// DDA
-		while (!hit)
-		{
-			if (side_dist_x < side_dist_y)
-			{
-				side_dist_x += delta_dist_x;
-				map_x += step_x;
-				side = 0;
-			}
-			else
-			{
-				side_dist_y += delta_dist_y;
-				map_y += step_y;
-				side = 1;
-			}
-			if (games->map->grid[map_y][map_x] == '1')
-				hit = 1;
-		}
-
-		// Distance perpendiculaire au mur
-		double perp_wall_dist = (side == 0)
-			? (map_x - games->player.pos_x + (1 - step_x) / 2) / ray_dir_x
-			: (map_y - games->player.pos_y + (1 - step_y) / 2) / ray_dir_y;
-
-		// Paramètres du rendu
-		t_ray_params ray;
-		ray.line_height = (int)(SCREEN_HEIGHT / perp_wall_dist);
-		ray.draw_start = -ray.line_height / 2 + SCREEN_HEIGHT / 2;
-		if (ray.draw_start < 0) ray.draw_start = 0;
-		ray.draw_end = ray.line_height / 2 + SCREEN_HEIGHT / 2;
-		if (ray.draw_end >= SCREEN_HEIGHT) ray.draw_end = SCREEN_HEIGHT - 1;
-
-		// Coordonnée exacte de l’impact du rayon sur le mur
-		if (side == 0)
-			ray.wall_x = games->player.pos_y + perp_wall_dist * ray_dir_y;
-		else
-			ray.wall_x = games->player.pos_x + perp_wall_dist * ray_dir_x;
-		ray.wall_x -= floor(ray.wall_x);
-
-		ray.tex_x = (int)(ray.wall_x * (double)TEXTURE_WIDTH);
-		if ((side == 0 && ray_dir_x > 0) || (side == 1 && ray_dir_y < 0))
-			ray.tex_x = TEXTURE_WIDTH - ray.tex_x - 1;
-
-		// Sélection de la texture
-		t_texture *tex;
-		if (side == 0)
-			tex = (ray_dir_x < 0) ? &games->textures[2] : &games->textures[3]; // WE / EA
-		else
-			tex = (ray_dir_y < 0) ? &games->textures[0] : &games->textures[1]; // NO / SO
-
-		draw_vertical_line(games, x, &ray, tex);
-	}
-} */
-
+// Function that runs through each x columns (left to right)
+// And send a ray in the world for each of them
 void	render_frame(t_games *games)
 {
-	int x = 0;
+	int	x;
 
+	x = 0;
 	while (x < SCREEN_WIDTH)
 	{
-		double camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
-		double ray_dir_x = games->player.dir_x + games->player.plane_x * camera_x;
-		double ray_dir_y = games->player.dir_y + games->player.plane_y * camera_x;
-
-		int map_x = (int)games->player.pos_x;
-		int map_y = (int)games->player.pos_y;
-
-		double delta_dist_x;
-		if (ray_dir_x == 0)
-			delta_dist_x = 1e30;
-		else
-			delta_dist_x = fabs(1 / ray_dir_x);
-
-		double delta_dist_y;
-		if (ray_dir_y == 0)
-			delta_dist_y = 1e30;
-		else
-			delta_dist_y = fabs(1 / ray_dir_y);
-
-		double side_dist_x;
-		double side_dist_y;
-		int step_x, step_y;
-		int hit = 0;
-		int side = 0;
-
-		if (ray_dir_x < 0)
-		{
-			step_x = -1;
-			side_dist_x = (games->player.pos_x - map_x) * delta_dist_x;
-		}
-		else
-		{
-			step_x = 1;
-			side_dist_x = (map_x + 1.0 - games->player.pos_x) * delta_dist_x;
-		}
-		if (ray_dir_y < 0)
-		{
-			step_y = -1;
-			side_dist_y = (games->player.pos_y - map_y) * delta_dist_y;
-		}
-		else
-		{
-			step_y = 1;
-			side_dist_y = (map_y + 1.0 - games->player.pos_y) * delta_dist_y;
-		}
-
-		while (!hit)
-		{
-			if (side_dist_x < side_dist_y)
-			{
-				side_dist_x += delta_dist_x;
-				map_x += step_x;
-				side = 0;
-			}
-			else
-			{
-				side_dist_y += delta_dist_y;
-				map_y += step_y;
-				side = 1;
-			}
-			if (games->map->grid[map_y][map_x] == '1')
-				hit = 1;
-		}
-
-		double perp_wall_dist;
-		if (side == 0)
-			perp_wall_dist = (map_x - games->player.pos_x + (1 - step_x) / 2.0) / ray_dir_x;
-		else
-			perp_wall_dist = (map_y - games->player.pos_y + (1 - step_y) / 2.0) / ray_dir_y;
-
-		t_ray_params ray;
-		ray.line_height = (int)(SCREEN_HEIGHT / perp_wall_dist);
-		ray.draw_start = -ray.line_height / 2 + SCREEN_HEIGHT / 2;
-		if (ray.draw_start < 0)
-			ray.draw_start = 0;
-		ray.draw_end = ray.line_height / 2 + SCREEN_HEIGHT / 2;
-		if (ray.draw_end >= SCREEN_HEIGHT)
-			ray.draw_end = SCREEN_HEIGHT - 1;
-
-		if (side == 0)
-			ray.wall_x = games->player.pos_y + perp_wall_dist * ray_dir_y;
-		else
-			ray.wall_x = games->player.pos_x + perp_wall_dist * ray_dir_x;
-
-		ray.wall_x -= floor(ray.wall_x);
-
-		ray.tex_x = (int)(ray.wall_x * (double)TEXTURE_WIDTH);
-		if ((side == 0 && ray_dir_x > 0) || (side == 1 && ray_dir_y < 0))
-			ray.tex_x = TEXTURE_WIDTH - ray.tex_x - 1;
-
-		t_texture *tex = NULL;
-		if (side == 0)
-		{
-			if (ray_dir_x < 0)
-				tex = &games->textures[2]; // WE
-			else
-				tex = &games->textures[3]; // EA
-		}
-		else
-		{
-			if (ray_dir_y < 0)
-				tex = &games->textures[0]; // NO
-			else
-				tex = &games->textures[1]; // SO
-		}
-
-		draw_vertical_line(games, x, &ray, tex);
+		cast_ray(games, x);
 		x++;
 	}
 }
 
-void	draw_vertical_line(t_games *games, int x, t_ray_params *ray, t_texture *tex)
+// Function that coordinates the work to calculate
+// And display textured walls
+void	cast_ray(t_games *games, int x)
 {
-	int		y;
-	int		tex_y;
-	//int		d;
-	int		color;
-	double	step;
-	double	tex_pos;
+	t_ray_vars	vars;
 
-	step = 1.0 * tex->height / ray->line_height;
-	tex_pos = (ray->draw_start - SCREEN_HEIGHT / 2 + ray->line_height / 2) * step;
+	init_ray_vars(&vars, games, x);
+	perform_dda(&vars, games);
+	compute_wall_distance(&vars, games);
+	calculate_ray_params(&vars.ray, &vars, games);
+	select_texture_and_draw(games, &vars.ray, &vars, x);
+}
 
-	y = ray->draw_start;
-	while (y < ray->draw_end)
+// Function to calculate the direction of the ray
+// And initializes necessary fields
+void	init_ray_vars(t_ray_vars *v, t_games *g, int x)
+{
+	v->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
+	v->ray_dir_x = g->player.dir_x + g->player.plane_x * v->camera_x;
+	v->ray_dir_y = g->player.dir_y + g->player.plane_y * v->camera_x;
+	v->map_x = (int)g->player.pos_x;
+	v->map_y = (int)g->player.pos_y;
+	if (v->ray_dir_x == 0)
+		v->delta_dist_x = 1e30;
+	else
+		v->delta_dist_x = fabs(1 / v->ray_dir_x);
+	if (v->ray_dir_y == 0)
+		v->delta_dist_y = 1e30;
+	else
+		v->delta_dist_y = fabs(1 / v->ray_dir_y);
+	init_step_and_side(v, g);
+	v->hit = 0;
+	v->side = 0;
+}
+
+// Function to define in which direction we will jump in the grid
+// It also calculate the distance between player and first line or column
+void	init_step_and_side(t_ray_vars *v, t_games *g)
+{
+	if (v->ray_dir_x < 0)
 	{
-		//tex_y = (int)tex_pos & (tex->height - 1);
-		tex_y = (int)tex_pos;
-		if (tex_y >= tex->height)
-			tex_y = tex->height - 1;
-		tex_pos += step;
-		color = get_pixel_color(tex, ray->tex_x, tex_y);
-		put_pixel(&games->img, x, y, color);
-		y++;
+		v->step_x = -1;
+		v->side_dist_x = (g->player.pos_x - v->map_x) * v->delta_dist_x;
+	}
+	else
+	{
+		v->step_x = 1;
+		v->side_dist_x = (v->map_x + 1.0 - g->player.pos_x) * v->delta_dist_x;
+	}
+	if (v->ray_dir_y < 0)
+	{
+		v->step_y = -1;
+		v->side_dist_y = (g->player.pos_y - v->map_y) * v->delta_dist_y;
+	}
+	else
+	{
+		v->step_y = 1;
+		v->side_dist_y = (v->map_y + 1.0 - g->player.pos_y) * v->delta_dist_y;
 	}
 }
 
-int	get_pixel_color(t_texture *tex, int x, int y)
+// Function that uses DDA (Digitial Differential Analyzer) algorthim
+// To run through the map until a wall is found (hit)
+void	perform_dda(t_ray_vars *v, t_games *g)
 {
-	char	*dst;
-
-	dst = tex->addr + (y * tex->line_length + x * (tex->bpp / 8));
-	return (*(unsigned int *)dst);
+	while (!v->hit)
+	{
+		if (v->side_dist_x < v->side_dist_y)
+		{
+			v->side_dist_x += v->delta_dist_x;
+			v->map_x += v->step_x;
+			v->side = 0;
+		}
+		else
+		{
+			v->side_dist_y += v->delta_dist_y;
+			v->map_y += v->step_y;
+			v->side = 1;
+		}
+		if (g->map->grid[v->map_y][v->map_x] == '1')
+			v->hit = 1;
+	}
 }
 
-void	put_pixel(t_img *img, int x, int y, int color)
+// Function that calculates the exact distance between player and a wall
+// after the player hits a wall
+void	compute_wall_distance(t_ray_vars *v, t_games *g)
 {
-	char	*dst;
-
-	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
-		return ;
-	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
+	if (v->side == 0)
+		v->perp_wall_dist = (v->map_x - g->player.pos_x +
+				(1 - v->step_x) / 2.0) / v->ray_dir_x;
+	else
+		v->perp_wall_dist = (v->map_y - g->player.pos_y +
+				(1 - v->step_y) / 2.0) / v->ray_dir_y;
 }
 
+// Function that calculates height and vertical position of the wall displayed
+void	calculate_ray_params(t_ray_params *r, t_ray_vars *v, t_games *g)
+{
+	r->line_height = (int)(SCREEN_HEIGHT / v->perp_wall_dist);
+	r->draw_start = -r->line_height / 2 + SCREEN_HEIGHT / 2;
+	if (r->draw_start < 0)
+		r->draw_start = 0;
+	r->draw_end = r->line_height / 2 + SCREEN_HEIGHT / 2;
+	if (r->draw_end >= SCREEN_HEIGHT)
+		r->draw_end = SCREEN_HEIGHT - 1;
+	if (v->side == 0)
+		r->wall_x = g->player.pos_y + v->perp_wall_dist * v->ray_dir_y;
+	else
+		r->wall_x = g->player.pos_x + v->perp_wall_dist * v->ray_dir_x;
+	r->wall_x -= floor(r->wall_x);
+	r->tex_x = (int)(r->wall_x * (double)TEXTURE_WIDTH);
+	if ((v->side == 0 && v->ray_dir_x > 0) || (v->side == 1 && v->ray_dir_y < 0))
+		r->tex_x = TEXTURE_WIDTH - r->tex_x - 1;
+}
 
+// Function that choose the right texture to display depending of the hitted wall
+// And of the direction of the ray
+void	select_texture_and_draw(t_games *g, t_ray_params *r, t_ray_vars *v, int x)
+{
+	t_texture	*tex;
+
+	tex = NULL;
+	if (v->side == 0)
+	{
+		if (v->ray_dir_x < 0)
+			tex = &g->textures[2]; // WE
+		else
+			tex = &g->textures[3]; // EA
+	}
+	else
+	{
+		if (v->ray_dir_y < 0)
+			tex = &g->textures[0]; // NO
+		else
+			tex = &g->textures[1]; // SO
+	}
+	draw_vertical_line(g, x, r, tex);
+}

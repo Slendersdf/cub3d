@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 07:50:10 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/09 16:01:55 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:57:28 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct s_game
 	t_mlx	*mlx;
 }	t_game;
 
+// FRANCIS PARTIE STRUCTURE //
+
 typedef struct s_ray_params
 {
 	int		line_height;
@@ -71,6 +73,25 @@ typedef struct s_ray_params
 	int		tex_x;
 	double	wall_x;
 }	t_ray_params;
+
+typedef struct s_ray_vars
+{
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	double	perp_wall_dist;
+	t_ray_params	ray;
+}	t_ray_vars;
 
 // Structure pour les directions du raycasting
 typedef struct s_player
@@ -84,6 +105,7 @@ typedef struct s_player
 }	t_player;
 
 // Structure pour chaque texture chargee avec MiniLibX
+// A combiner avec la structure de Clement !!!!
 typedef struct s_texture
 {
 	void	*img;
@@ -106,6 +128,7 @@ typedef struct s_img
 }	t_img;
 
 // Structure pour appeler les autres structures
+// A combiner avec la structure de Clement !!!!
 typedef struct s_games
 {
 	t_map		*map;
@@ -191,6 +214,14 @@ int			load_textures(t_games *games);
 void		init_player(t_games *games);
 
 void	render_frame(t_games *games);
+void	cast_ray(t_games *games, int x);
+void	init_ray_vars(t_ray_vars *v, t_games *g, int x);
+void	init_step_and_side(t_ray_vars *v, t_games *g);
+void	perform_dda(t_ray_vars *v, t_games *g);
+void	compute_wall_distance(t_ray_vars *v, t_games *g);
+void	calculate_ray_params(t_ray_params *r, t_ray_vars *v, t_games *g);
+void	select_texture_and_draw(t_games *g, t_ray_params *r, t_ray_vars *v, int x);
+
 void	draw_vertical_line(t_games *games, int x, t_ray_params *ray, t_texture *tex);
 int	get_pixel_color(t_texture *tex, int x, int y);
 void	put_pixel(t_img *img, int x, int y, int color);
