@@ -6,7 +6,7 @@
 #    By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 07:40:56 by caubert           #+#    #+#              #
-#    Updated: 2025/04/10 14:53:15 by fpaulas-         ###   ########.fr        #
+#    Updated: 2025/04/14 12:51:09 by fpaulas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,18 @@ INCDIR	=	include
 OBJDIR	=	objs
 LIBDIR	=	libft
 
-SRCS	=	main.c cleanup/frees.c error/error.c setup/init_map.c parser/colors_utils.c parser/dup_line.c parser/map_utils.c \
+SRCS	=	main.c \
+			cleanup/frees.c cleanup/free_game.c cleanup/free_render.c cleanup/free_textures.c \
+			error/error.c \
+			setup/init_map.c setup/init_game.c setup/init_mlx.c setup/init_player.c setup/init_render.c setup/init_window.c \
+			parser/colors_utils.c parser/dup_line.c parser/map_utils.c \
 			parser/parse_map.c parser/parser.c parser/parser_utils.c parser/textures_utils.c parser/validate_colors.c \
-			parser/validate_file.c parser/validate_textures.c parser/validate_map.c parser/map_parsing_utils.c setup/init_game.c \
-			setup/init_mlx.c setup/init_window.c window/hooks.c cleanup/free_game.c \
-			raycasting/load_textures.c raycasting/init_image.c raycasting/raycaster.c raycasting/raycaster_annex.c
+			parser/validate_file.c parser/validate_textures.c parser/validate_map.c parser/map_parsing_utils.c \
+			window/hooks.c \
+			textures/load_textures.c textures/render_textures.c textures/textures_utils.c \
+			player/player_movement.c \
+			raycasting/raycaster.c raycasting/raycaster_utils.c \
+			minimap/minimap.c
 
 OBJ		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 

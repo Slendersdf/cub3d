@@ -12,58 +12,9 @@
 
 #include "../../include/cub3d.h"
 
-// Function that runs through each x columns (left to right)
-// And send a ray in the world for each of them
-void	render_frame(t_games *games)
-{
-	int	x;
-
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		cast_ray(games, x);
-		x++;
-	}
-}
-
-// Function that coordinates the work to calculate
-// And display textured walls
-void	cast_ray(t_games *games, int x)
-{
-	t_ray_vars	vars;
-
-	init_ray_vars(&vars, games, x);
-	perform_dda(&vars, games);
-	compute_wall_distance(&vars, games);
-	calculate_ray_params(&vars.ray, &vars, games);
-	select_texture_and_draw(games, &vars.ray, &vars, x);
-}
-
-// Function to calculate the direction of the ray
-// And initializes necessary fields
-void	init_ray_vars(t_ray_vars *v, t_games *g, int x)
-{
-	v->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
-	v->ray_dir_x = g->player.dir_x + g->player.plane_x * v->camera_x;
-	v->ray_dir_y = g->player.dir_y + g->player.plane_y * v->camera_x;
-	v->map_x = (int)g->player.pos_x;
-	v->map_y = (int)g->player.pos_y;
-	if (v->ray_dir_x == 0)
-		v->delta_dist_x = 1e30;
-	else
-		v->delta_dist_x = fabs(1 / v->ray_dir_x);
-	if (v->ray_dir_y == 0)
-		v->delta_dist_y = 1e30;
-	else
-		v->delta_dist_y = fabs(1 / v->ray_dir_y);
-	init_step_and_side(v, g);
-	v->hit = 0;
-	v->side = 0;
-}
-
-// Function to define in which direction we will jump in the grid
-// It also calculate the distance between player and first line or column
-void	init_step_and_side(t_ray_vars *v, t_games *g)
+/* Function to define in which direction we will jump in the grid
+ * It also calculate the distance between player and first line or column */
+void	init_step_and_side(t_ray_vars *v, t_game *g)
 {
 	if (v->ray_dir_x < 0)
 	{
@@ -87,9 +38,9 @@ void	init_step_and_side(t_ray_vars *v, t_games *g)
 	}
 }
 
-// Function that uses DDA (Digitial Differential Analyzer) algorthim
-// To run through the map until a wall is found (hit)
-void	perform_dda(t_ray_vars *v, t_games *g)
+/* Function that uses DDA (Digitial Differential Analyzer) algorthim
+ * To run through the map until a wall is found (hit) */
+void	perform_dda(t_ray_vars *v, t_game *g)
 {
 	while (!v->hit)
 	{
@@ -110,58 +61,61 @@ void	perform_dda(t_ray_vars *v, t_games *g)
 	}
 }
 
-// Function that calculates the exact distance between player and a wall
-// after the player hits a wall
-void	compute_wall_distance(t_ray_vars *v, t_games *g)
+/* Function that calculates the exact distance between player and a wall
+ * after the player hits a wall */
+void	compute_wall_distance(t_ray_vars *v, t_game *g)
 {
 	if (v->side == 0)
-		v->perp_wall_dist = (v->map_x - g->player.pos_x +
+		v->perp_wall_dist = (v->map_x - g->player.pos_x + \
 				(1 - v->step_x) / 2.0) / v->ray_dir_x;
 	else
-		v->perp_wall_dist = (v->map_y - g->player.pos_y +
+		v->perp_wall_dist = (v->map_y - g->player.pos_y + \
 				(1 - v->step_y) / 2.0) / v->ray_dir_y;
 }
 
-// Function that calculates height and vertical position of the wall displayed
-void	calculate_ray_params(t_ray_params *r, t_ray_vars *v, t_games *g)
+/* Function that calculates height and vertical position of the wall
+ * displayed */
+void	calculate_ray_params(t_ray_params *r, t_ray_vars *v, t_game *g)
 {
-	r->line_height = (int)(SCREEN_HEIGHT / v->perp_wall_dist);
-	r->draw_start = -r->line_height / 2 + SCREEN_HEIGHT / 2;
+	r->line_height = (int)(g->mlx->win_height / v->perp_wall_dist);
+	r->draw_start = -r->line_height / 2 + g->mlx->win_height / 2;
 	if (r->draw_start < 0)
 		r->draw_start = 0;
-	r->draw_end = r->line_height / 2 + SCREEN_HEIGHT / 2;
-	if (r->draw_end >= SCREEN_HEIGHT)
-		r->draw_end = SCREEN_HEIGHT - 1;
+	r->draw_end = r->line_height / 2 + g->mlx->win_height / 2;
+	if (r->draw_end >= g->mlx->win_height)
+		r->draw_end = g->mlx->win_height - 1;
 	if (v->side == 0)
 		r->wall_x = g->player.pos_y + v->perp_wall_dist * v->ray_dir_y;
 	else
 		r->wall_x = g->player.pos_x + v->perp_wall_dist * v->ray_dir_x;
 	r->wall_x -= floor(r->wall_x);
 	r->tex_x = (int)(r->wall_x * (double)TEXTURE_WIDTH);
-	if ((v->side == 0 && v->ray_dir_x > 0) || (v->side == 1 && v->ray_dir_y < 0))
+	if ((v->side == 0 && v->ray_dir_x > 0) || \
+			(v->side == 1 && v->ray_dir_y < 0))
 		r->tex_x = TEXTURE_WIDTH - r->tex_x - 1;
 }
 
-// Function that choose the right texture to display depending of the hitted wall
-// And of the direction of the ray
-void	select_texture_and_draw(t_games *g, t_ray_params *r, t_ray_vars *v, int x)
+/* Function that choose the right texture to display depending of the hitted
+ * wall and of the direction of the ray */
+void	select_texture_and_draw(t_game *g, t_ray_params *r, t_ray_vars *v, \
+		int x)
 {
-	t_texture	*tex;
+	int	texture_num;
 
-	tex = NULL;
+	texture_num = 0;
 	if (v->side == 0)
 	{
 		if (v->ray_dir_x < 0)
-			tex = &g->textures[2]; // WE
+			texture_num = 2;
 		else
-			tex = &g->textures[3]; // EA
+			texture_num = 3;
 	}
 	else
 	{
 		if (v->ray_dir_y < 0)
-			tex = &g->textures[0]; // NO
+			texture_num = 0;
 		else
-			tex = &g->textures[1]; // SO
+			texture_num = 1;
 	}
-	draw_vertical_line(g, x, r, tex);
+	draw_texture_line(g, texture_num, x, r);
 }

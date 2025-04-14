@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_game.c                                        :+:      :+:    :+:   */
+/*   free_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 17:59:56 by caubert           #+#    #+#             */
-/*   Updated: 2025/02/19 17:59:56 by caubert          ###   ########.fr       */
+/*   Created: 2025/04/08 10:52:43 by caubert           #+#    #+#             */
+/*   Updated: 2025/04/08 10:52:43 by caubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	free_game(t_game *game)
+/* Frees rendered resources.
+ * Since screen is a variable representing the screen (duh) is has to be freed
+ * separately once everything else has been freed.*/
+void	free_render(t_game *game)
 {
 	if (!game)
 		return ;
-	free_render(game);
-	if (game->mlx)
+	free_all_textures(game);
+	if (game->screen)
 	{
-		if (game->mlx->win)
-			mlx_destroy_window(game->mlx->mlx, game->mlx->win);
-		if (game->mlx->mlx)
-		{
-			mlx_destroy_display(game->mlx->mlx);
-			free(game->mlx->mlx);
-		}
-		free(game->mlx);
+		free_texture(game->mlx, game->screen);
+		game->screen = NULL;
 	}
-	if (game->map)
-		free_map(game->map);
-	free(game);
 }
