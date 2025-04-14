@@ -6,7 +6,7 @@
 #    By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 07:40:56 by caubert           #+#    #+#              #
-#    Updated: 2025/04/14 12:51:09 by fpaulas-         ###   ########.fr        #
+#    Updated: 2025/04/14 15:50:26 by fpaulas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS	=	main.c \
 			parser/colors_utils.c parser/dup_line.c parser/map_utils.c \
 			parser/parse_map.c parser/parser.c parser/parser_utils.c parser/textures_utils.c parser/validate_colors.c \
 			parser/validate_file.c parser/validate_textures.c parser/validate_map.c parser/map_parsing_utils.c \
-			window/hooks.c \
+			window/hooks.c window/mouse.c \
 			textures/load_textures.c textures/render_textures.c textures/textures_utils.c \
 			player/player_movement.c \
 			raycasting/raycaster.c raycasting/raycaster_utils.c \

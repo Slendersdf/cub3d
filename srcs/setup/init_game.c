@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:53:49 by caubert           #+#    #+#             */
-/*   Updated: 2025/02/19 17:53:49 by caubert          ###   ########.fr       */
+/*   Updated: 2025/04/14 15:50:56 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ t_game	*init_game(void)
 	game->keys.d = 0;
 	game->keys.left = 0;
 	game->keys.right = 0;
+	game->mouse_captured = 0;
 	return (game);
 }

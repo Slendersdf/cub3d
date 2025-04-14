@@ -6,12 +6,14 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:43:03 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/14 12:51:53 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:59:16 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
+// Function to draw square(s)
+// Useful to draw the minimap and other quadrilaterals
 void	draw_square(t_img *img, int x, int y, int size, int color)
 {
 	int i, j;
@@ -29,6 +31,7 @@ void	draw_square(t_img *img, int x, int y, int size, int color)
 	}
 }
 
+// Function to draw the player on the minimap
 void	draw_player_on_minimap(t_game *game, int offset_x, int offset_y)
 {
 	int player_x, player_y;
@@ -39,6 +42,7 @@ void	draw_player_on_minimap(t_game *game, int offset_x, int offset_y)
 	draw_square(game->screen, player_x - 2, player_y - 2, 4, 0xFF0000); // rouge
 }
 
+// Function to draw the minimap and the player, square by square
 void	draw_minimap(t_game *game)
 {
 	int i, j;

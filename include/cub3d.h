@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 07:50:10 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/14 12:47:27 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:50:07 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_game
 	int				ceiling_color;
 	t_player		player;
 	t_keys			keys;
+	int				mouse_captured;
 }	t_game;
 
 int				handle_keyrelease(int keycode, t_game *game);
@@ -145,6 +146,8 @@ int				handle_close(t_game *game);
 void			free_game(t_game *game);
 int				setup_hooks(t_game *game);
 void			free_game(t_game *game);
+int				handle_mouse_move(int x, int y, t_game *game);
+void			toggle_mouse_capture(t_game *game);
 
 int				handle_close(t_game *game);
 int				handle_keypress(int keycode, t_game *game);
