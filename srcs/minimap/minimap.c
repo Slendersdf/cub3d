@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:43:03 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/14 15:59:16 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:19:27 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	draw_minimap(t_game *game)
 		j = 0;
 		while (j < game->map->width)
 		{
-			if (game->map->grid[i][j] == '1')
+			if (j < (int)ft_strlen(game->map->grid[i]) && game->map->grid[i][j] == '1')
 				color = 0x555555;  // murs : gris
 			else
 				color = 0xAAAAAA;  // sol : clair
