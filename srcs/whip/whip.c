@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:42:40 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/16 14:36:14 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:59:18 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,11 @@ void	init_whip(t_game *game)
 	int i;
 
 	game->whip.current_delay = 0;
-	game->whip.frame_count = WHIP_FRAME_COUNT; // le nombre d'image a changer
+	game->whip.frame_count = WHIP_FRAME_COUNT;
 	game->whip.frames = malloc(sizeof(t_img *) * WHIP_FRAME_COUNT);
 	if (!game->whip.frames)
-	{
-			printf("Failed to allocate whip frame.\n");
-			exit(1);
-	}
-	game->whip.frame_delay = malloc(sizeof(int) * WHIP_FRAME_COUNT);
-	if (!game->whip.frame_delay)
-	{
-			printf("Failed to allocate whip frame delays.\n");
-			exit(1);
-	}
+		exit(1);
+
 	i = 0;
 	while (i < WHIP_FRAME_COUNT)
 	{
@@ -46,57 +38,69 @@ void	init_whip(t_game *game)
 		if (!game->whip.frames[i])
 		{
 			printf("Failed to load whip frame: %s\n", whip_frame_paths[i]);
-			exit(1); // ou bien return une erreur propre
+			exit(1);
 		}
-		// et ici on définit le délai en fonction de l'image
-		if (i < 4)
-		game->whip.frame_delay[i] = 3;  // plus rapide au début
-		else if (i < 8)
-			game->whip.frame_delay[i] = 5;  // ralentit un peu
-		else
-			game->whip.frame_delay[i] = 7;  // impact plus long en fin
 		i++;
 	}
+	game->whip.frame_delay = 20; // délai unique pour tout le fouet
 	game->whip.current_frame = 0;
 	game->whip.is_active = 0;
 }
 
-void update_whip(t_game *game)
+void	update_whip(t_game *game)
 {
-	if (game->whip.is_active)
+	// Si inactif : on affiche la frame 0 en continu
+	if (!game->whip.is_active)
 	{
-		// afficher la frame actuelle
-		draw_whip_frame(game, game->whip.frames[game->whip.current_frame]);
+		draw_whip_frame(game, game->whip.frames[0]);
+		return;
+	}
 
-		// attendre le bon nombre de frames avant de passer à la suivante
-		if (game->whip.current_delay < game->whip.frame_delay[game->whip.current_frame])
-		{
-			game->whip.current_delay++;
-			return;
-		}
-		game->whip.current_delay = 0;
-		game->whip.current_frame++;
+	// Affiche la frame actuelle pendant l'animation
+	draw_whip_frame(game, game->whip.frames[game->whip.current_frame]);
 
-		// fin de l'animation
-		if (game->whip.current_frame >= game->whip.frame_count)
-		{
-			game->whip.is_active = 0;
-			game->whip.current_frame = 0;
-			printf("current_frame: %d / %d\n", game->whip.current_frame, game->whip.frame_count);
-		}
+	// Attendre le délai défini avant de passer à la suivante
+	if (game->whip.current_delay < game->whip.frame_delay)
+	{
+		game->whip.current_delay++;
+		return;
+	}
+
+	game->whip.current_delay = 0;
+	game->whip.current_frame++;
+
+	// Fin de l'animation
+	if (game->whip.current_frame >= game->whip.frame_count)
+	{
+		game->whip.is_active = 0;
+		game->whip.current_frame = 0;
 	}
 }
 
 void	draw_whip_frame(t_game *game, t_img *frame)
 {
-	int pos_x;
-	int pos_y;
+	int	x, y;
+	int	dst_x, dst_y;
+	int	color;
 
 	if (!frame || !frame->img)
 		return ;
 
-	pos_x = (game->mlx->win_width - frame->width) / 1.1;
-	pos_y = game->mlx->win_height - frame->height;
+	dst_x = (game->mlx->win_width - frame->width) / 1.000111;
+	dst_y = game->mlx->win_height - frame->height + 10;
 
-	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win, frame->img, pos_x, pos_y);
+	y = 0;
+	while (y < frame->height)
+	{
+		x = 0;
+		while (x < frame->width)
+		{
+			color = get_pixel_color(frame, x, y);
+			// si color != transparent (par exemple 0xFF000000 pour transparence)
+			if ((color & 0xFF000000) != 0xFF000000)
+				put_pixel_to_img(game->screen, dst_x + x, dst_y + y, color);
+			x++;
+		}
+		y++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:59:56 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 14:52:49 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:40:33 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	free_game(t_game *game)
 		}
 		free(game->whip.frames);
 	}
-	if (game->whip.frame_delay)
-		free(game->whip.frame_delay);
 
 	// Détruire les autres ressources MLX maintenant
 	free_render(game);
