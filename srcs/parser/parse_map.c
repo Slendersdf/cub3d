@@ -25,16 +25,16 @@ int	finalize_map_parsing(t_map *map)
 	return (1);
 }
 
-static int	handle_empty_line(t_map *map)
-{
-	if (map->grid)
-	{
-		if (!verify_map_started(map))
-			return (0);
-		return (error_msg("Empty line or space in map not allowed"));
-	}
-	return (1);
-}
+//static int	handle_empty_line(t_map *map)
+//{
+//	if (map->grid)
+//	{
+//		if (!verify_map_started(map))
+//			return (0);
+//		return (error_msg("Empty line or space in map not allowed"));
+//	}
+//	return (1);
+//}
 
 /*Duplicates the map.*/
 static int	create_new_grid(t_map *map, char *new_line)

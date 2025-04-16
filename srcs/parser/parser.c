@@ -12,23 +12,11 @@
 
 #include "../../include/cub3d.h"
 
-/*Utility function used to handle empty or spaces only line.*/
-static int	handle_empty_line(t_map *map)
-{
-	if (map->grid && !map->height)
-		return (error_msg("Empty map"));
-	if (map->height > 0)
-		map->parsing_map = 1;
-	return (1);
-}
-
 /*Verifies we're currently in the map part of file or not.*/
 static int	handle_map_line(char *line, t_map *map)
 {
 	if (!check_all_elements_loaded(map))
 		return (0);
-	if (map->parsing_map)
-		return (error_msg("Map must be continuous"));
 	return (parse_map_line(line, map));
 }
 
@@ -37,11 +25,11 @@ int	process_line(char *line, int type, t_map *map)
 {
 	if (type == 0)
 		return (handle_empty_line(map));
-	if (type == 7)
+	if (type == 9)
 		return (handle_map_line(line, map));
 	else if (map->parsing_map)
 		return (error_msg("Map must be the last element"));
-	if (type >= 1 && type <= 4)
+	if (type >= 1 && type <= 6)
 	{
 		if (type == 1)
 			return (parse_texture(line, &map->textures.no));
@@ -49,11 +37,15 @@ int	process_line(char *line, int type, t_map *map)
 			return (parse_texture(line, &map->textures.so));
 		if (type == 3)
 			return (parse_texture(line, &map->textures.we));
-		return (parse_texture(line, &map->textures.ea));
+		if (type == 4)
+			return (parse_texture(line, &map->textures.ea));
+		if (type == 5)
+			return (parse_texture(line, &map->textures.d_closed));
+		return (parse_texture(line, &map->textures.d_open));
 	}
-	else if (type == 5)
+	else if (type == 7)
 		return (parse_color(line, map->textures.f));
-	else if (type == 6)
+	else if (type == 8)
 		return (parse_color(line, map->textures.c));
 	return (1);
 }

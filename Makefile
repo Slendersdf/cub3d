@@ -6,7 +6,7 @@
 #    By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 07:40:56 by caubert           #+#    #+#              #
-#    Updated: 2025/04/15 15:06:24 by fpaulas-         ###   ########.fr        #
+#    Updated: 2025/04/16 18:53:47 by fpaulas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INCDIR	=	include
 OBJDIR	=	objs
 LIBDIR	=	libft
 
-SRCS	=	main.c \
+SRCS	=	main.c main_utils.c \
 			cleanup/frees.c cleanup/free_game.c cleanup/free_render.c cleanup/free_textures.c \
 			error/error.c \
 			setup/init_map.c setup/init_game.c setup/init_mlx.c setup/init_player.c setup/init_render.c setup/init_window.c \
@@ -32,8 +32,9 @@ SRCS	=	main.c \
 			textures/load_textures.c textures/render_textures.c textures/textures_utils.c \
 			player/player_movement.c \
 			raycasting/raycaster.c raycasting/raycaster_utils.c \
-			minimap/minimap.c \
-			whip/whip.c
+			minimap/minimap.c parser/validate_map_spaces.c parser/empty_line_handler.c \
+			window/door.c parser/doors_handler.c window/hooks_utils.c \
+			textures/textures_utils_2.c whip/whip.c
 
 OBJ		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 

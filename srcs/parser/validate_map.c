@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/*
 static int	is_walkable(char c)
 {
 	return (c == '0' || ft_strchr("NSWE", c));
@@ -34,7 +35,7 @@ static int	check_adjacent_spaces(t_map *map, int x, int y)
 	return (1);
 }
 
-/*Verifies with above functions that '0' cells aren't touching void spaces.*/
+//Verifies with above functions that '0' cells aren't touching void spaces.//
 int	validate_map_spaces(t_map *map)
 {
 	int	x;
@@ -57,7 +58,7 @@ int	validate_map_spaces(t_map *map)
 	}
 	return (1);
 }
-
+*/
 /*As the name goes, verifies the NSWE cell is within the map and single.*/
 int	check_player_position(t_map *map)
 {

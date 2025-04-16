@@ -92,7 +92,7 @@ void	draw_texture_line(t_game *game, int texture_num, int x, \
 	double			step;
 	double			tex_pos;
 
-	if (texture_num < 0 || texture_num > 3 || !game->textures[texture_num])
+	if (texture_num < 0 || texture_num >= 6 || !game->textures[texture_num])
 		return ;
 	step = 1.0 * game->textures[texture_num]->height / params->line_height;
 	tex_pos = (params->draw_start - game->mlx->win_height / 2 \
@@ -100,12 +100,7 @@ void	draw_texture_line(t_game *game, int texture_num, int x, \
 	y = params->draw_start;
 	while (y < params->draw_end)
 	{
-		//tex_y = (int)tex_pos & (game->textures[texture_num]->height - 1);
-		tex_y = (int)tex_pos;
-		if (tex_y < 0)
-			tex_y = 0;
-		if (tex_y >= game->textures[texture_num]->height)
-			tex_y = game->textures[texture_num]->height - 1;
+		calculate_texture_y(game, tex_pos, texture_num, &tex_y);
 		tex_pos += step;
 		color = get_pixel_color(game->textures[texture_num], params->tex_x,
 				tex_y);

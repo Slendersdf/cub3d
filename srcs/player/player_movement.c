@@ -12,6 +12,22 @@
 
 #include "../../include/cub3d.h"
 
+static int	is_closed_door(t_game *game, int x, int y)
+{
+	int	i;
+
+	if (game->map->grid[y][x] != 'D')
+		return (0);
+	i = 0;
+	while (i < game->door_count)
+	{
+		if (game->doors[i].x == x && game->doors[i].y == y)
+			return (!game->doors[i].is_open);
+		i++;
+	}
+	return (1);
+}
+
 /* Checks if a movement is valid (no collision with a wall). */
 int	is_valid_move(t_game *game, double new_x, double new_y)
 {
@@ -24,7 +40,11 @@ int	is_valid_move(t_game *game, double new_x, double new_y)
 		return (0);
 	if ((size_t)map_x >= ft_strlen(game->map->grid[map_y]))
 		return (0);
-	return (game->map->grid[map_y][map_x] != '1');
+	if (game->map->grid[map_y][map_x] == '1')
+		return (0);
+	if (is_closed_door(game, map_x, map_y))
+		return (0);
+	return (1);
 }
 
 /* Moves the player forward or backward. */

@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 16:19:49 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/15 12:50:33 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:56:32 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	perform_dda(t_ray_vars *v, t_game *g)
 		}
 		if (g->map->grid[v->map_y][v->map_x] == '1')
 			v->hit = 1;
+		else if (g->map->grid[v->map_y][v->map_x] == 'D')
+			handle_door_hit(v, g);
 	}
 }
 
@@ -102,20 +104,25 @@ void	select_texture_and_draw(t_game *g, t_ray_params *r, t_ray_vars *v, \
 {
 	int	texture_num;
 
-	texture_num = 0;
-	if (v->side == 0)
-	{
-		if (v->ray_dir_x < 0)
-			texture_num = 2;
-		else
-			texture_num = 3;
-	}
+	if (v->is_door)
+		texture_num = get_door_texture(v);
 	else
 	{
-		if (v->ray_dir_y < 0)
-			texture_num = 0;
+		texture_num = 0;
+		if (v->side == 0)
+		{
+			if (v->ray_dir_x < 0)
+				texture_num = 2;
+			else
+				texture_num = 3;
+		}
 		else
-			texture_num = 1;
+		{
+			if (v->ray_dir_y < 0)
+				texture_num = 0;
+			else
+				texture_num = 1;
+		}
 	}
 	draw_texture_line(g, texture_num, x, r);
 }

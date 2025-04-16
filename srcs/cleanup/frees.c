@@ -39,6 +39,10 @@ static void	free_textures(t_textures *textures)
 		free(textures->we);
 	if (textures->ea)
 		free(textures->ea);
+	if (textures->d_closed)
+		free(textures->d_closed);
+	if (textures->d_open)
+		free(textures->d_open);
 }
 
 void	free_map(t_map *map)

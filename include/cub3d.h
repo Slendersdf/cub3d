@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 07:50:10 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 16:24:33 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:47:05 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@
 
 # define MINIMAP_SCALE 8
 
-#define WHIP_FRAME_COUNT 6
+# define WHIP_FRAME_COUNT 6
 
-extern char *whip_frame_paths[WHIP_FRAME_COUNT];
 typedef struct s_mlx
 {
 	void			*mlx;
@@ -61,6 +60,7 @@ typedef struct s_keys
 	int				d;
 	int				left;
 	int				right;
+	int				e;
 }	t_keys;
 
 /* Used for player position, rotation and movements. */
@@ -103,7 +103,27 @@ typedef struct s_ray_vars
 	int				side;
 	double			perp_wall_dist;
 	t_ray_params	ray;
+	int				is_door;
+	int				d_open;
 }	t_ray_vars;
+
+typedef struct s_door
+{
+	int				x;
+	int				y;
+	int				is_open;
+}	t_door;
+
+typedef struct s_whip
+{
+	t_img			**frames;
+	int				frame_count;
+	int				current_frame;
+	int				is_active;
+	int				frame_delay;
+	int				current_delay;
+	char			*whip_frame_path[WHIP_FRAME_COUNT];
+}	t_whip;
 
 typedef struct s_textures
 {
@@ -111,10 +131,10 @@ typedef struct s_textures
 	char			*so;
 	char			*we;
 	char			*ea;
+	char			*d_closed;
+	char			*d_open;
 	int				f[3];
 	int				c[3];
-	//char			*one;
-	//char			*two;
 }	t_textures;
 
 typedef struct s_map
@@ -125,17 +145,6 @@ typedef struct s_map
 	int				width;
 	int				parsing_map;
 }	t_map;
-
-typedef struct s_whip
-{
-	t_img	**frames;
-	int		frame_count;
-	int		current_frame;
-	int		is_active;
-	int		frame_delay; // nombre de frames a attendre entre deux images
-	int		current_delay; // compteur actuel
-	char	*whip_frame_paths[WHIP_FRAME_COUNT];
-}	t_whip;
 
 typedef struct s_game
 {
@@ -148,12 +157,26 @@ typedef struct s_game
 	t_player		player;
 	t_keys			keys;
 	int				mouse_captured;
+	t_door			*doors;
+	int				door_count;
 	t_whip			whip;
 }	t_game;
+
+t_img			*load_texture_file(t_game *game, char *path);
+void			handle_door_hit(t_ray_vars *v, t_game *g);
+int				get_door_texture(t_ray_vars *v);
+void			calculate_texture_y(t_game *game, double tex_pos, \
+					int texture_num, int *tex_y);
+void			adjust_mouse_position(int x, int *prev_x, t_game *game);
+int				find_door_index(t_game *game, int x, int y);
+int				init_doors(t_game *game);
+void			handle_door_interaction(t_game *game);
+int				handle_empty_line(t_map *map);
 
 int				handle_keyrelease(int keycode, t_game *game);
 
 int				main(int argc, char **argv);
+int				setup_graphics(t_game *game);
 
 int				init_window(t_game *game);
 t_game			*init_game(void);
@@ -171,7 +194,6 @@ int				handle_keypress(int keycode, t_game *game);
 
 /*Textures*/
 int				load_textures(t_game *game);
-t_img			*load_texture_file(t_game *game, char *path);
 void			free_all_textures(t_game *game);
 void			free_texture(t_mlx *mlx, t_img *texture);
 int				create_rgb(int r, int g, int b);
@@ -259,14 +281,15 @@ int				validate_map_format(t_map *map);
 //BONUS//
 
 /*minimap*/
-void	draw_square(t_img *img, int x, int y, int size, int color);
-void	draw_player_on_minimap(t_game *game, int offset_x, int offset_y);
-void	draw_minimap(t_game *game);
+void			draw_square(t_img *img, int x, int y, int size, int color);
+void			draw_player_on_minimap(t_game *game, int offset_x, \
+					int offset_y);
+void			draw_minimap(t_game *game);
 
 /*sprite WHIP*/
-void	init_whip(t_game *game);
-void	update_whip(t_game *game);
-void	draw_whip_frame(t_game *game, t_img *frame);
-int		mouse_press(int button, int x, int y, t_game *game);
+void			init_whip(t_game *game);
+void			update_whip(t_game *game);
+void			draw_whip_frame(t_game *game, t_img *frame);
+int				mouse_press(int button, int x, int y, t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:08:27 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/15 15:10:22 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:08:27 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ static int	load_texture_images(t_game *game)
 	game->textures[1] = load_texture_file(game, game->map->textures.so);
 	game->textures[2] = load_texture_file(game, game->map->textures.we);
 	game->textures[3] = load_texture_file(game, game->map->textures.ea);
+	game->textures[4] = load_texture_file(game, game->map->textures.d_closed);
+	game->textures[5] = load_texture_file(game, game->map->textures.d_open);
 	i = 0;
-	while (i < 4)
+	while (i < 6)
 	{
 		if (!game->textures[i])
 		{
@@ -82,11 +84,11 @@ int	load_textures(t_game *game)
 {
 	int	i;
 
-	game->textures = malloc(sizeof(t_img *) * 4);
+	game->textures = malloc(sizeof(t_img *) * 6);
 	if (!game->textures)
 		return (error_msg("Failed to allocate memory for textures"));
 	i = 0;
-	while (i < 4)
+	while (i < 6)
 		game->textures[i++] = NULL;
 	if (!load_texture_images(game))
 		return (0);

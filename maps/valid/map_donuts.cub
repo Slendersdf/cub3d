@@ -1,7 +1,9 @@
 NO ./textures/no_texture/no.xpm
-SO ./textures/so_texture/no.xpm
-WE ./textures/we_texture/no.xpm
-EA ./textures/ea_texture/no.xpm
+SO ./textures/so_texture/so.xpm
+WE ./textures/we_texture/we.xpm
+EA ./textures/ea_texture/ea.xpm
+DC ./textures/doors_texture/closed.xpm
+DO ./textures/doors_texture/opened.xpm
 
 F 220,100,30
 C 45,			54,45
@@ -14,7 +16,7 @@ C 45,			54,45
 1000001    1000000000000001     101   101
 10000001    10000000000001      100111001
 1000001      111000000000111111110000000011
-10000001111 	100000000000000000000000001
+10000001111 	10000000000000D000000000001
 100000000001    100000000000111111000000001
 1000000000001  1000000000001      11100001
 1000000000000110000000000001        10001

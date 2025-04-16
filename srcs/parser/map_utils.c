@@ -16,7 +16,7 @@ int	check_valid_chars(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || \
 			c == 'S' || c == 'E' || c == 'W' || \
-			c == ' ');
+			c == 'D' || c == ' ');
 }
 
 int	is_map_line(char *line)

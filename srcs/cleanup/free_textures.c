@@ -31,7 +31,7 @@ void	free_all_textures(t_game *game)
 	if (!game || !game->textures)
 		return ;
 	i = 0;
-	while (i < 4)
+	while (i < 6)
 	{
 		free_texture(game->mlx, game->textures[i]);
 		i++;

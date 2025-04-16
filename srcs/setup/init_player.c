@@ -41,6 +41,14 @@ void	init_player(t_game *game)
 	}
 }
 
+static void	set_north_direction(t_game *game)
+{
+	game->player.dir_x = 0;
+	game->player.dir_y = -1;
+	game->player.plane_x = 0.66;
+	game->player.plane_y = 0;
+}
+
 /* Initializes the player's direction and camera position depending on the
  * orientation.
  * dir = direction in which the player look.
@@ -52,12 +60,7 @@ void	init_player(t_game *game)
 void	init_player_direction(t_game *game, char orientation)
 {
 	if (orientation == 'N')
-	{
-		game->player.dir_x = 0;
-		game->player.dir_y = -1;
-		game->player.plane_x = 0.66;
-		game->player.plane_y = 0;
-	}
+		set_north_direction(game);
 	else if (orientation == 'S')
 	{
 		game->player.dir_x = 0;

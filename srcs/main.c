@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:50:41 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 14:49:06 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:50:41 by caubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	game_loop(t_game *game)
 		rotate_player(game, -game->player.rotation_speed);
 	if (game->keys.right)
 		rotate_player(game, game->player.rotation_speed);
+	handle_door_interaction(game);
 	render_frame(game);
 	return (0);
 }
@@ -77,15 +78,12 @@ static int	setup_game(t_game **game, char *map_path)
 		return (0);
 	}
 	(*game)->map = parse_file(map_path);
-	if (!(*game)->map || !init_window(*game))
+	if (!(*game)->map)
 	{
 		free_game(*game);
 		return (0);
 	}
-	init_player(*game);
-	setup_hooks(*game);
-	init_whip(*game);
-	if (!init_render(*game))
+	if (!setup_graphics(*game))
 	{
 		free_game(*game);
 		return (0);
