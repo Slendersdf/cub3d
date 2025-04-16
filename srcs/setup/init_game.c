@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:53:49 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 16:02:38 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:25:41 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,3 @@ t_game	*init_game(void)
 	game->mouse_captured = 0;
 	return (game);
 }
-
-

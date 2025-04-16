@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 07:50:10 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 16:04:17 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:24:33 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ typedef struct s_whip
 	int		is_active;
 	int		frame_delay; // nombre de frames a attendre entre deux images
 	int		current_delay; // compteur actuel
+	char	*whip_frame_paths[WHIP_FRAME_COUNT];
 }	t_whip;
 
 typedef struct s_game
