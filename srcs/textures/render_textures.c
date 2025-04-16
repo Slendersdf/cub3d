@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 10:55:39 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/14 12:46:54 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:46:50 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int	render_frame(t_game *game)
 	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win, \
 			game->screen->img, 0, 0);
+	update_whip(game);
 	return (1);
 }

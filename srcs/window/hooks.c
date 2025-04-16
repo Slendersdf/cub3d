@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:55:59 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/14 15:48:12 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:47:54 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,19 @@ int handle_mouse_move(int x, int y, t_game *game)
 	return (0);
 }
 
+// For the whip action button
+int	mouse_press(int button, int x, int y, t_game *game)
+{
+	(void)x;
+	(void)y;
+	if (button == 1 && !game->whip.is_active) // clic gauche
+	{
+		game->whip.is_active = 1;
+		game->whip.current_frame = 0;
+	}
+	return (0);
+}
+
 
 /* Handles close up of the window. */
 int	handle_close(t_game *game)
@@ -103,5 +116,6 @@ int	setup_hooks(t_game *game)
 				&handle_close, game);
 	mlx_hook(game->mlx->win, MotionNotify, PointerMotionMask, \
 				&handle_mouse_move, game);
+	mlx_hook(game->mlx->win, 4, 1L<<2, mouse_press, game);
 	return (1);
 }

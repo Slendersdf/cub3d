@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:08:27 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/08 11:08:27 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:10:22 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	create_rgb(int r, int g, int b)
  * mlx_get_data_addr() get the data address of the image and fills extra infos
  * such as bits per pixel, line length, so on.
  * In the end, it returns the loaded and allocated image. */
-static t_img	*load_texture_file(t_game *game, char *path)
+t_img	*load_texture_file(t_game *game, char *path)
 {
 	t_img	*img;
 

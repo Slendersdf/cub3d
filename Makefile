@@ -6,7 +6,7 @@
 #    By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 07:40:56 by caubert           #+#    #+#              #
-#    Updated: 2025/04/14 15:50:26 by fpaulas-         ###   ########.fr        #
+#    Updated: 2025/04/15 15:06:24 by fpaulas-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRCS	=	main.c \
 			textures/load_textures.c textures/render_textures.c textures/textures_utils.c \
 			player/player_movement.c \
 			raycasting/raycaster.c raycasting/raycaster_utils.c \
-			minimap/minimap.c
+			minimap/minimap.c \
+			whip/whip.c
 
 OBJ		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 

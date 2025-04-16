@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:50:41 by caubert           #+#    #+#             */
-/*   Updated: 2025/02/08 14:50:41 by caubert          ###   ########.fr       */
+/*   Updated: 2025/04/16 12:57:43 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static int	setup_game(t_game **game, char *map_path)
 		free_game(*game);
 		return (0);
 	}
+	init_whip(*game);
 	return (1);
 }
 

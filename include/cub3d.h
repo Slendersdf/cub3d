@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 07:50:10 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/14 15:50:07 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:26:03 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 
 # define MINIMAP_SCALE 8
 
+#define WHIP_FRAME_COUNT 18
+
+extern char *whip_frame_paths[WHIP_FRAME_COUNT];
 typedef struct s_mlx
 {
 	void			*mlx;
@@ -110,6 +113,8 @@ typedef struct s_textures
 	char			*ea;
 	int				f[3];
 	int				c[3];
+	//char			*one;
+	//char			*two;
 }	t_textures;
 
 typedef struct s_map
@@ -120,6 +125,14 @@ typedef struct s_map
 	int				width;
 	int				parsing_map;
 }	t_map;
+
+typedef struct s_whip
+{
+	t_img	**frames;
+	int		frame_count;
+	int		current_frame;
+	int		is_active;
+}	t_whip;
 
 typedef struct s_game
 {
@@ -132,6 +145,7 @@ typedef struct s_game
 	t_player		player;
 	t_keys			keys;
 	int				mouse_captured;
+	t_whip			whip;
 }	t_game;
 
 int				handle_keyrelease(int keycode, t_game *game);
@@ -154,6 +168,7 @@ int				handle_keypress(int keycode, t_game *game);
 
 /*Textures*/
 int				load_textures(t_game *game);
+t_img			*load_texture_file(t_game *game, char *path);
 void			free_all_textures(t_game *game);
 void			free_texture(t_mlx *mlx, t_img *texture);
 int				create_rgb(int r, int g, int b);
@@ -244,5 +259,11 @@ int				validate_map_format(t_map *map);
 void	draw_square(t_img *img, int x, int y, int size, int color);
 void	draw_player_on_minimap(t_game *game, int offset_x, int offset_y);
 void	draw_minimap(t_game *game);
+
+/*sprite WHIP*/
+void	init_whip(t_game *game);
+void	update_whip(t_game *game);
+void	draw_whip_frame(t_game *game, t_img *frame);
+int		mouse_press(int button, int x, int y, t_game *game);
 
 #endif
