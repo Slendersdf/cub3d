@@ -6,7 +6,7 @@
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 07:50:10 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 12:26:03 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:29:42 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define MINIMAP_SCALE 8
 
-#define WHIP_FRAME_COUNT 18
+#define WHIP_FRAME_COUNT 6
 
 extern char *whip_frame_paths[WHIP_FRAME_COUNT];
 typedef struct s_mlx
@@ -132,6 +132,8 @@ typedef struct s_whip
 	int		frame_count;
 	int		current_frame;
 	int		is_active;
+	int		*frame_delay; // nombre de frames a attendre entre deux images
+	int		current_delay; // compteur actuel
 }	t_whip;
 
 typedef struct s_game
