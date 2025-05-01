@@ -12,6 +12,8 @@
 
 #include "../../include/cub3d.h"
 
+/* Calculates the Y coordinates for texture mapping. Ensures it stays within the
+ * valid range of the texture's height to prevent segfault. */
 void	calculate_texture_y(t_game *game, double tex_pos, int texture_num, \
 					int *tex_y)
 {

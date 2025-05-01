@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Verifies that the line doesn't start with a comma. */
 int	check_initial_comma(char *line)
 {
 	int	i;
@@ -26,6 +27,7 @@ int	check_initial_comma(char *line)
 	return (1);
 }
 
+/* Checks if the string ends with a comma. */
 int	check_trailing_comma(char *str)
 {
 	int	len;
@@ -38,6 +40,7 @@ int	check_trailing_comma(char *str)
 	return (0);
 }
 
+/* Verifies that there are no consecutive commas in the string. */
 int	check_consecutive_commas(char *str)
 {
 	int	i;
@@ -52,6 +55,7 @@ int	check_consecutive_commas(char *str)
 	return (0);
 }
 
+/* Validates that the string contains only a valid number between 0-255. */
 int	is_valid_number(char *str)
 {
 	int		i;

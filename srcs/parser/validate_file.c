@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Extract the base filename from a path. */
 static char	*get_basename(char *filename)
 {
 	char	*basename;

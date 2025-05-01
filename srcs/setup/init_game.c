@@ -43,9 +43,6 @@ t_game	*init_game(void)
 	game->keys.d = 0;
 	game->keys.left = 0;
 	game->keys.right = 0;
-	game->keys.e = 0;
 	game->mouse_captured = 0;
-	game->doors = NULL;
-	game->door_count = 0;
 	return (game);
 }

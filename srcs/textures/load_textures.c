@@ -27,7 +27,7 @@ int	create_rgb(int r, int g, int b)
  * mlx_get_data_addr() get the data address of the image and fills extra infos
  * such as bits per pixel, line length, so on.
  * In the end, it returns the loaded and allocated image. */
-t_img	*load_texture_file(t_game *game, char *path)
+static t_img	*load_texture_file(t_game *game, char *path)
 {
 	t_img	*img;
 
@@ -52,6 +52,7 @@ t_img	*load_texture_file(t_game *game, char *path)
 	return (img);
 }
 
+/* Calls the load of texture files for each index of the textures array. */
 static int	load_texture_images(t_game *game)
 {
 	int	i;
@@ -60,10 +61,8 @@ static int	load_texture_images(t_game *game)
 	game->textures[1] = load_texture_file(game, game->map->textures.so);
 	game->textures[2] = load_texture_file(game, game->map->textures.we);
 	game->textures[3] = load_texture_file(game, game->map->textures.ea);
-	game->textures[4] = load_texture_file(game, game->map->textures.d_closed);
-	game->textures[5] = load_texture_file(game, game->map->textures.d_open);
 	i = 0;
-	while (i < 6)
+	while (i < 4)
 	{
 		if (!game->textures[i])
 		{
@@ -84,11 +83,11 @@ int	load_textures(t_game *game)
 {
 	int	i;
 
-	game->textures = malloc(sizeof(t_img *) * 6);
+	game->textures = malloc(sizeof(t_img *) * 4);
 	if (!game->textures)
 		return (error_msg("Failed to allocate memory for textures"));
 	i = 0;
-	while (i < 6)
+	while (i < 4)
 		game->textures[i++] = NULL;
 	if (!load_texture_images(game))
 		return (0);

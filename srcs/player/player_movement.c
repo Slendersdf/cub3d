@@ -12,37 +12,17 @@
 
 #include "../../include/cub3d.h"
 
-static int	is_closed_door(t_game *game, int x, int y)
-{
-	int	i;
-
-	if (game->map->grid[y][x] != 'D')
-		return (0);
-	i = 0;
-	while (i < game->door_count)
-	{
-		if (game->doors[i].x == x && game->doors[i].y == y)
-			return (!game->doors[i].is_open);
-		i++;
-	}
-	return (1);
-}
-
-/* Checks if a movement is valid (no collision with a wall). */
-int	is_valid_move(t_game *game, double new_x, double new_y)
+/* Checks if the position is inside of the map only. */
+static int	is_inside_map(t_game *game, double x, double y)
 {
 	int	map_x;
 	int	map_y;
 
-	map_x = (int)new_x;
-	map_y = (int)new_y;
+	map_x = (int)x;
+	map_y = (int)y;
 	if (map_x < 0 || map_y < 0 || map_y >= game->map->height)
 		return (0);
 	if ((size_t)map_x >= ft_strlen(game->map->grid[map_y]))
-		return (0);
-	if (game->map->grid[map_y][map_x] == '1')
-		return (0);
-	if (is_closed_door(game, map_x, map_y))
 		return (0);
 	return (1);
 }
@@ -55,9 +35,9 @@ void	move_player_forward(t_game *game, double move_speed)
 
 	new_x = game->player.pos_x + game->player.dir_x * move_speed;
 	new_y = game->player.pos_y + game->player.dir_y * move_speed;
-	if (is_valid_move(game, new_x, game->player.pos_y))
+	if (is_inside_map(game, new_x, game->player.pos_y))
 		game->player.pos_x = new_x;
-	if (is_valid_move(game, game->player.pos_x, new_y))
+	if (is_inside_map(game, game->player.pos_x, new_y))
 		game->player.pos_y = new_y;
 }
 
@@ -69,9 +49,9 @@ void	move_player_sideways(t_game *game, double move_speed)
 
 	new_x = game->player.pos_x + game->player.plane_x * move_speed;
 	new_y = game->player.pos_y + game->player.plane_y * move_speed;
-	if (is_valid_move(game, new_x, game->player.pos_y))
+	if (is_inside_map(game, new_x, game->player.pos_y))
 		game->player.pos_x = new_x;
-	if (is_valid_move(game, game->player.pos_x, new_y))
+	if (is_inside_map(game, game->player.pos_x, new_y))
 		game->player.pos_y = new_y;
 }
 

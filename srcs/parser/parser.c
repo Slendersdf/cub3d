@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_map.c                                     :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -25,11 +25,11 @@ int	process_line(char *line, int type, t_map *map)
 {
 	if (type == 0)
 		return (handle_empty_line(map));
-	if (type == 9)
+	if (type == 7)
 		return (handle_map_line(line, map));
 	else if (map->parsing_map)
 		return (error_msg("Map must be the last element"));
-	if (type >= 1 && type <= 6)
+	if (type >= 1 && type <= 4)
 	{
 		if (type == 1)
 			return (parse_texture(line, &map->textures.no));
@@ -37,15 +37,11 @@ int	process_line(char *line, int type, t_map *map)
 			return (parse_texture(line, &map->textures.so));
 		if (type == 3)
 			return (parse_texture(line, &map->textures.we));
-		if (type == 4)
-			return (parse_texture(line, &map->textures.ea));
-		if (type == 5)
-			return (parse_texture(line, &map->textures.d_closed));
-		return (parse_texture(line, &map->textures.d_open));
+		return (parse_texture(line, &map->textures.ea));
 	}
-	else if (type == 7)
+	else if (type == 5)
 		return (parse_color(line, map->textures.f));
-	else if (type == 8)
+	else if (type == 6)
 		return (parse_color(line, map->textures.c));
 	return (1);
 }

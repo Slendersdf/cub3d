@@ -12,6 +12,7 @@
 
 #include "../include/cub3d.h"
 
+/* Checks args number. */
 static int	check_args(int argc, char **argv)
 {
 	if (argc != 2)
@@ -22,6 +23,7 @@ static int	check_args(int argc, char **argv)
 	return (1);
 }
 
+/* Main game loop to constantly render frames and handle player's movements. */
 int	game_loop(t_game *game)
 {
 	if (game->keys.w)
@@ -36,7 +38,6 @@ int	game_loop(t_game *game)
 		rotate_player(game, -game->player.rotation_speed);
 	if (game->keys.right)
 		rotate_player(game, game->player.rotation_speed);
-	handle_door_interaction(game);
 	render_frame(game);
 	return (0);
 }
@@ -67,6 +68,7 @@ static t_map	*parse_file(char *filename)
 	return (map);
 }
 
+/* Main initialization of the game in most of it's aspects. */
 static int	setup_game(t_game **game, char *map_path)
 {
 	*game = init_game();
@@ -78,12 +80,14 @@ static int	setup_game(t_game **game, char *map_path)
 		return (0);
 	}
 	(*game)->map = parse_file(map_path);
-	if (!(*game)->map)
+	if (!(*game)->map || !init_window(*game))
 	{
 		free_game(*game);
 		return (0);
 	}
-	if (!setup_graphics(*game))
+	init_player(*game);
+	setup_hooks(*game);
+	if (!init_render(*game))
 	{
 		free_game(*game);
 		return (0);
@@ -91,6 +95,7 @@ static int	setup_game(t_game **game, char *map_path)
 	return (1);
 }
 
+/* Main function calling for all the setup, the mlx loop and the game loop. */
 int	main(int argc, char **argv)
 {
 	t_game	*game;

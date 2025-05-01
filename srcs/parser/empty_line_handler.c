@@ -12,11 +12,13 @@
 
 #include "../../include/cub3d.h"
 
+/* Checks if a character is a walkable position (meaning 0 or player pos). */
 static int	is_walkable(char c)
 {
 	return (c == '0' || ft_strchr("NSEW", c));
 }
 
+/* Checks if a position is protected by walls on all sides. */
 static int	is_protected(t_map *map, int x, int y)
 {
 	if (y <= 0 || y >= map->height - 1)
@@ -34,6 +36,8 @@ static int	is_protected(t_map *map, int x, int y)
 	return (1);
 }
 
+/* Validates that all walkable positions in the current map are properly
+ * closed. */
 static int	validate_current_map(t_map *map)
 {
 	int	x;
@@ -56,6 +60,8 @@ static int	validate_current_map(t_map *map)
 	return (1);
 }
 
+/* Handles empty lines during map parsing, validates the current state
+ * of the map. */
 int	handle_empty_line(t_map *map)
 {
 	if (map->grid && !map->height)

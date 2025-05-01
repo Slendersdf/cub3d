@@ -56,10 +56,14 @@ void	perform_dda(t_ray_vars *v, t_game *g)
 			v->map_y += v->step_y;
 			v->side = 1;
 		}
+		if (v->map_x < 0 || v->map_y < 0 || v->map_y >= g->map->height || \
+				(size_t)v->map_x >= ft_strlen(g->map->grid[v->map_y]))
+		{
+			v->hit = 1;
+			continue ;
+		}
 		if (g->map->grid[v->map_y][v->map_x] == '1')
 			v->hit = 1;
-		else if (g->map->grid[v->map_y][v->map_x] == 'D')
-			handle_door_hit(v, g);
 	}
 }
 
@@ -92,8 +96,8 @@ void	calculate_ray_params(t_ray_params *r, t_ray_vars *v, t_game *g)
 		r->wall_x = g->player.pos_x + v->perp_wall_dist * v->ray_dir_x;
 	r->wall_x -= floor(r->wall_x);
 	r->tex_x = (int)(r->wall_x * (double)TEXTURE_WIDTH);
-	if ((v->side == 0 && v->ray_dir_x > 0) || \
-			(v->side == 1 && v->ray_dir_y < 0))
+	if ((v->side == 0 && v->ray_dir_x < 0) || \
+			(v->side == 1 && v->ray_dir_y > 0))
 		r->tex_x = TEXTURE_WIDTH - r->tex_x - 1;
 }
 
@@ -104,25 +108,20 @@ void	select_texture_and_draw(t_game *g, t_ray_params *r, t_ray_vars *v, \
 {
 	int	texture_num;
 
-	if (v->is_door)
-		texture_num = get_door_texture(v);
+	texture_num = 0;
+	if (v->side == 0)
+	{
+		if (v->ray_dir_x < 0)
+			texture_num = 2;
+		else
+			texture_num = 3;
+	}
 	else
 	{
-		texture_num = 0;
-		if (v->side == 0)
-		{
-			if (v->ray_dir_x < 0)
-				texture_num = 2;
-			else
-				texture_num = 3;
-		}
+		if (v->ray_dir_y < 0)
+			texture_num = 0;
 		else
-		{
-			if (v->ray_dir_y < 0)
-				texture_num = 0;
-			else
-				texture_num = 1;
-		}
+			texture_num = 1;
 	}
 	draw_texture_line(g, texture_num, x, r);
 }

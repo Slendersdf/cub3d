@@ -12,6 +12,8 @@
 
 #include "../../include/cub3d.h"
 
+/* Inits the window's opening by initializing the mlx's structure and mlx itself
+ * also ensure no error can go through and quit properly. */
 int	init_window(t_game *game)
 {
 	if (!game || !game->map)

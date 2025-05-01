@@ -12,16 +12,19 @@
 
 #include "../../include/cub3d.h"
 
+/* Determines if a character rerpesents a walkable position. */
 static int	is_walkable(char c)
 {
 	return (c == '0' || ft_strchr("NSEW", c));
 }
 
+/* Checks if a character represents an empty space or void. */
 static int	is_valid_space(char c)
 {
 	return (c == ' ' || c == '\0');
 }
 
+/* Verifies that walkable positions aren't adjacent to void spaces. */
 static int	check_adjacent_to_void(t_map *map, int x, int y)
 {
 	if (y == 0 || y == map->height - 1)
@@ -42,6 +45,7 @@ static int	check_adjacent_to_void(t_map *map, int x, int y)
 	return (1);
 }
 
+/* Replaces all space characters with walls for consistency. */
 static void	replace_spaces_with_walls(t_map *map)
 {
 	int	x;
@@ -61,6 +65,7 @@ static void	replace_spaces_with_walls(t_map *map)
 	}
 }
 
+/* Validates that the map is properly enclosed, with no paths to void spaces. */
 int	validate_map_spaces(t_map *map)
 {
 	int	x;

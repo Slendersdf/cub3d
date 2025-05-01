@@ -33,9 +33,7 @@ int	validate_texture_identifier(char *line, int *i)
 	if ((line[0] != 'N' || line[1] != 'O') && \
 		(line[0] != 'S' || line[1] != 'O') && \
 		(line[0] != 'W' || line[1] != 'E') && \
-		(line[0] != 'E' || line[1] != 'A') && \
-		(line[0] != 'D' || line[1] != 'C') && \
-		(line[0] != 'D' || line[1] != 'O'))
+		(line[0] != 'E' || line[1] != 'A'))
 		return (error_msg("Unknown texture identifier"));
 	*i = 2;
 	if (!line[*i])

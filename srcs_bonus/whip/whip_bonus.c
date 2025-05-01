@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   whip.c                                             :+:      :+:    :+:   */
+/*   whip_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:42:40 by fpaulas-          #+#    #+#             */
-/*   Updated: 2025/04/16 18:54:20 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:41:09 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "../../include_bonus/cub3d.h"
 
 char	*g_whip_frame_paths[WHIP_FRAME_COUNT] = {
 	"./textures/whip/1_bigger.xpm",
@@ -41,7 +41,7 @@ void	init_whip(t_game *game)
 		}
 		i++;
 	}
-	game->whip.frame_delay = 20;
+	game->whip.frame_delay = 17;
 	game->whip.current_frame = 0;
 	game->whip.is_active = 0;
 }

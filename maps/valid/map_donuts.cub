@@ -1,12 +1,12 @@
-NO ./textures/no_texture/no.xpm
-SO ./textures/so_texture/so.xpm
-WE ./textures/we_texture/we.xpm
-EA ./textures/ea_texture/ea.xpm
-DC ./textures/doors_texture/closed.xpm
-DO ./textures/doors_texture/opened.xpm
+NO ./textures/no_texture/bigger_no.xpm
+SO ./textures/so_texture/bigger_so.xpm
+WE ./textures/we_texture/bigger_we.xpm
+EA ./textures/ea_texture/bigger_ea.xpm
+DC ./textures/doors_texture/bigger_closed.xpm
+DO ./textures/doors_texture/bigger_opened.xpm
 
-F 220,100,30
-C 45,			54,45
+F 16,16,16
+C 16,	16,16
 
        1111111111111111111
    111100000000000000000001111
@@ -24,3 +24,12 @@ C 45,			54,45
  111111000000000000000000000001111100001
 	   11111111111100000000000011111111
                   1111111111111
+
+11111
+11111
+11111
+
+
+1111
+1111
+1111

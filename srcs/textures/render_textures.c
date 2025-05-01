@@ -59,8 +59,6 @@ int	render_frame(t_game *game)
 		cast_ray(game, x);
 		x++;
 	}
-	draw_minimap(game);
-	update_whip(game);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win, \
 			game->screen->img, 0, 0);
 	return (1);

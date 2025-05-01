@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Handles errors when opening texture files. */
 static int	handle_texture_error(int fd)
 {
 	if (fd != -1)
@@ -23,6 +24,7 @@ static int	handle_texture_error(int fd)
 	return (error_msg("Cannot open texture file"));
 }
 
+/* Checks if a texture path points to a valid, accessible file. */
 static int	check_texture_path(char *path)
 {
 	int		fd;

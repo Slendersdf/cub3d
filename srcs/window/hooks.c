@@ -32,53 +32,24 @@ int	handle_keypress(int keycode, t_game *game)
 		game->keys.left = 1;
 	else if (keycode == XK_Right)
 		game->keys.right = 1;
-	else if (keycode == XK_e)
-		game->keys.e = 1;
-	else if (keycode == XK_m)
-		toggle_mouse_capture(game);
 	return (0);
 }
 
+/* Same as above but for keyrelease. */
 int	handle_keyrelease(int keycode, t_game *game)
 {
 	if (keycode == XK_w)
 		game->keys.w = 0;
 	else if (keycode == XK_s)
 		game->keys.s = 0;
-	else if (keycode == XK_a)
+	if (keycode == XK_a)
 		game->keys.a = 0;
-	else if (keycode == XK_d)
+	if (keycode == XK_d)
 		game->keys.d = 0;
-	else if (keycode == XK_Left)
+	if (keycode == XK_Left)
 		game->keys.left = 0;
-	else if (keycode == XK_Right)
+	if (keycode == XK_Right)
 		game->keys.right = 0;
-	else if (keycode == XK_e)
-		game->keys.e = 0;
-	return (0);
-}
-
-int	handle_mouse_move(int x, int y, t_game *game)
-{
-	static int	prev_x;
-	int			diff_x;
-	double		rotation_speed;
-
-	(void)y;
-	prev_x = -1;
-	if (!game->mouse_captured)
-		return (0);
-	if (prev_x == -1)
-	{
-		prev_x = x;
-		return (0);
-	}
-	diff_x = x - prev_x;
-	if (diff_x == 0)
-		return (0);
-	rotation_speed = game->player.rotation_speed * diff_x * 0.05;
-	rotate_player(game, rotation_speed);
-	adjust_mouse_position(x, &prev_x, game);
 	return (0);
 }
 
@@ -97,8 +68,5 @@ int	setup_hooks(t_game *game)
 				game);
 	mlx_hook(game->mlx->win, DestroyNotify, StructureNotifyMask, \
 				&handle_close, game);
-	mlx_hook(game->mlx->win, MotionNotify, PointerMotionMask, \
-				&handle_mouse_move, game);
-	mlx_hook(game->mlx->win, 4, 1L << 2, mouse_press, game);
 	return (1);
 }

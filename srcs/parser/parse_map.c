@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Performs final validation checks on the map after parsing. */
 int	finalize_map_parsing(t_map *map)
 {
 	if (!verify_map_content(map))
@@ -25,18 +26,7 @@ int	finalize_map_parsing(t_map *map)
 	return (1);
 }
 
-//static int	handle_empty_line(t_map *map)
-//{
-//	if (map->grid)
-//	{
-//		if (!verify_map_started(map))
-//			return (0);
-//		return (error_msg("Empty line or space in map not allowed"));
-//	}
-//	return (1);
-//}
-
-/*Duplicates the map.*/
+/* Duplicates the map. */
 static int	create_new_grid(t_map *map, char *new_line)
 {
 	char	**new_grid;
@@ -58,6 +48,8 @@ static int	create_new_grid(t_map *map, char *new_line)
 	return (1);
 }
 
+/* Updates map properties (height and width) after adding a new line, in case
+ * it differs from previous logged record for width. */
 static int	update_map_properties(t_map *map, char *new_line)
 {
 	if (!create_new_grid(map, new_line))
@@ -67,7 +59,7 @@ static int	update_map_properties(t_map *map, char *new_line)
 	return (1);
 }
 
-/*Starts treatment of supposed map lines.*/
+/* Starts treatment of supposed map lines. */
 int	parse_map_line(char *line, t_map *map)
 {
 	char	*new_line;

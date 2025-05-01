@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Checks if a line is empty. */
 int	is_empty_line(char *line)
 {
 	int	i;
@@ -26,27 +27,10 @@ int	is_empty_line(char *line)
 	return (1);
 }
 
-static int	check_texture_identifier(char *trimmed)
-{
-	if (ft_strncmp(trimmed, "NO ", 3) == 0)
-		return (1);
-	if (ft_strncmp(trimmed, "SO ", 3) == 0)
-		return (2);
-	if (ft_strncmp(trimmed, "WE ", 3) == 0)
-		return (3);
-	if (ft_strncmp(trimmed, "EA ", 3) == 0)
-		return (4);
-	if (ft_strncmp(trimmed, "DC", 2) == 0)
-		return (5);
-	if (ft_strncmp(trimmed, "DO", 2) == 0)
-		return (6);
-	return (0);
-}
-
+/* Identifies the type of line (texture, color, map or empty). */
 int	get_line_type(char *line)
 {
 	char	*trimmed;
-	int		tex_type;
 
 	if (!line)
 		return (-1);
@@ -55,18 +39,25 @@ int	get_line_type(char *line)
 	trimmed = line;
 	while (*trimmed && ft_isspace(*trimmed))
 		trimmed++;
-	tex_type = check_texture_identifier(trimmed);
-	if (tex_type)
-		return (tex_type);
+	if (ft_strncmp(trimmed, "NO ", 3) == 0)
+		return (1);
+	if (ft_strncmp(trimmed, "SO ", 3) == 0)
+		return (2);
+	if (ft_strncmp(trimmed, "WE ", 3) == 0)
+		return (3);
+	if (ft_strncmp(trimmed, "EA ", 3) == 0)
+		return (4);
 	if (ft_strncmp(trimmed, "F ", 2) == 0)
-		return (7);
+		return (5);
 	if (ft_strncmp(trimmed, "C ", 2) == 0)
-		return (8);
+		return (6);
 	if (ft_strchr("01NSEW", trimmed[0]))
-		return (9);
+		return (7);
 	return (-1);
 }
 
+/* Verifies that all required elements have been loaded before processing the
+ * map. */
 int	check_all_elements_loaded(t_map *map)
 {
 	if (!map->textures.no)
@@ -77,10 +68,6 @@ int	check_all_elements_loaded(t_map *map)
 		return (error_msg("West texture missing"));
 	if (!map->textures.ea)
 		return (error_msg("East texture missing"));
-	if (!map->textures.d_closed)
-		return (error_msg("Door closed texture missing"));
-	if (!map->textures.d_open)
-		return (error_msg("Door open texture missing"));
 	if (map->textures.f[0] == -1)
 		return (error_msg("Floor color missing"));
 	if (map->textures.c[0] == -1)

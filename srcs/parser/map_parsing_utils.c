@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Validates the map format, checking for empty lines or invalid spaces. */
 int	validate_map_format(t_map *map)
 {
 	int	i;
@@ -30,6 +31,7 @@ int	validate_map_format(t_map *map)
 	return (1);
 }
 
+/* Verifies that the map has been started (that it's not empty). */
 int	verify_map_started(t_map *map)
 {
 	if (!map->grid || map->height == 0)
@@ -37,6 +39,7 @@ int	verify_map_started(t_map *map)
 	return (1);
 }
 
+/* Validates that the map content is not empty after processing. */
 int	verify_map_content(t_map *map)
 {
 	int	i;

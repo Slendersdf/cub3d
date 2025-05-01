@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doors_handler.c                                    :+:      :+:    :+:   */
+/*   doors_handler_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:00:43 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/15 18:00:43 by caubert          ###   ########.fr       */
+/*   Updated: 2025/04/18 11:06:56 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "../../include_bonus/cub3d.h"
 
 /* Counts the total number of doors in the map. */
 static int	count_doors(t_map *map)

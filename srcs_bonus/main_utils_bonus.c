@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_utils.c                                       :+:      :+:    :+:   */
+/*   main_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:02:27 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 15:02:27 by caubert          ###   ########.fr       */
+/*   Updated: 2025/04/18 11:12:22 by fpaulas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../include_bonus/cub3d.h"
 
 int	setup_graphics(t_game *game)
 {

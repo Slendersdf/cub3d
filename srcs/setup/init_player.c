@@ -41,7 +41,7 @@ void	init_player(t_game *game)
 	}
 }
 
-static void	set_north_direction(t_game *game)
+static void	start_pos_n(t_game *game)
 {
 	game->player.dir_x = 0;
 	game->player.dir_y = -1;
@@ -60,7 +60,7 @@ static void	set_north_direction(t_game *game)
 void	init_player_direction(t_game *game, char orientation)
 {
 	if (orientation == 'N')
-		set_north_direction(game);
+		start_pos_n(game);
 	else if (orientation == 'S')
 	{
 		game->player.dir_x = 0;

@@ -12,13 +12,16 @@
 
 #include "../../include/cub3d.h"
 
+/* Checks if a character is valid for the map (0, 1, player direction, or
+ * space). */
 int	check_valid_chars(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || \
 			c == 'S' || c == 'E' || c == 'W' || \
-			c == 'D' || c == ' ');
+			c == ' ');
 }
 
+/* Determines if a line is part of the map based on its starting character. */
 int	is_map_line(char *line)
 {
 	int	i;
@@ -35,6 +38,7 @@ int	is_map_line(char *line)
 			line[i] == ' ');
 }
 
+/* Checks if a line contains only whitespace characters. */
 int	is_empty_or_spaces(char *line)
 {
 	int	i;
@@ -49,6 +53,7 @@ int	is_empty_or_spaces(char *line)
 	return (1);
 }
 
+/* Validates that a map line contains non-space characters. */
 int	is_valid_map_line(char *line)
 {
 	size_t	len;
@@ -65,6 +70,7 @@ int	is_valid_map_line(char *line)
 	return (1);
 }
 
+/* Checks that a line doesn't contain invalid characters. */
 int	check_trailing_chars(char *line)
 {
 	int	i;

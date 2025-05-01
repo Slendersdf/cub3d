@@ -12,26 +12,6 @@
 
 #include "../../include/cub3d.h"
 
-void	handle_door_hit(t_ray_vars *v, t_game *g)
-{
-	int	door_index;
-
-	v->hit = 1;
-	v->is_door = 1;
-	door_index = find_door_index(g, v->map_x, v->map_y);
-	if (door_index != -1)
-		v->d_open = g->doors[door_index].is_open;
-	else
-		v->d_open = 0;
-}
-
-int	get_door_texture(t_ray_vars *v)
-{
-	if (v->d_open)
-		return (5);
-	return (4);
-}
-
 /* Function that coordinates the work to calculate
 * And display textured walls */
 void	cast_ray(t_game *game, int x)
@@ -65,6 +45,4 @@ void	init_ray_vars(t_ray_vars *v, t_game *g, int x)
 	init_step_and_side(v, g);
 	v->hit = 0;
 	v->side = 0;
-	v->is_door = 0;
-	v->d_open = 0;
 }

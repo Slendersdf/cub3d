@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Frees an array of strings and the array itself. */
 void	free_split(char **split)
 {
 	int	i;
@@ -27,6 +28,7 @@ void	free_split(char **split)
 	free(split);
 }
 
+/* Frees all texture paths stored in the textures structure t_textures. */
 static void	free_textures(t_textures *textures)
 {
 	if (!textures)
@@ -39,12 +41,9 @@ static void	free_textures(t_textures *textures)
 		free(textures->we);
 	if (textures->ea)
 		free(textures->ea);
-	if (textures->d_closed)
-		free(textures->d_closed);
-	if (textures->d_open)
-		free(textures->d_open);
 }
 
+/* Frees the entire map structure t_map including texture paths and the grid. */
 void	free_map(t_map *map)
 {
 	int	i;
@@ -66,6 +65,7 @@ void	free_map(t_map *map)
 	free(map);
 }
 
+/* Frees a grid of strings with a specified height. */
 void	free_grid(char **grid, int height)
 {
 	int	i;
@@ -78,6 +78,7 @@ void	free_grid(char **grid, int height)
 	free(grid);
 }
 
+/* Empties the gnl buffer by consuming and freeing all remaining lines. */
 void	free_gnl_buffer(int fd)
 {
 	char	*tmp;

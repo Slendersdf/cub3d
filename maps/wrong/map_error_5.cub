@@ -1,16 +1,13 @@
-NO ./textures/no_texture/collen.png
-SO ./textures/so_texture/no.xpm
-WE ./textures/we_texture/no.xpm
-EA ./textures/ea_texture/no.xpm
+NO ./textures/no_texture/no_texture.xpm
+SO ./textures/so_texture/so_texture.xpm
+WE ./textures/we_texture/we_texture.xpm
+EA ./textures/ea_texture/ea_texture.xpm
 
  F 220,100,30
  C 45,54,45
 
  11111
- 10001 1111
- 11111 1101
-       1111
-
- 1111
- 10N01 
- 11 111
+ 10001
+      
+ 10S01
+ 11111

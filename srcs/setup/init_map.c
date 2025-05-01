@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaulas- <fpaulas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: caubert <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 08:51:25 by caubert           #+#    #+#             */
-/*   Updated: 2025/04/16 19:46:38 by fpaulas-         ###   ########.fr       */
+/*   Updated: 2025/02/10 08:51:25 by caubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
+/* Inits the whole map structure like textures paths, colors of floor and
+ * ceiling, map dimensions. */
 t_map	*init_map(void)
 {
 	t_map	*map;
@@ -23,8 +25,6 @@ t_map	*init_map(void)
 	map->textures.so = NULL;
 	map->textures.we = NULL;
 	map->textures.ea = NULL;
-	map->textures.d_open = NULL;
-	map->textures.d_closed = NULL;
 	map->textures.f[0] = -1;
 	map->textures.f[1] = -1;
 	map->textures.f[2] = -1;

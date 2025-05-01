@@ -12,6 +12,7 @@
 
 #include "../../include/cub3d.h"
 
+/* Inits the mlx structure along with window's dimentions. */
 t_mlx	*init_mlx_struct(void)
 {
 	t_mlx	*mlx;
